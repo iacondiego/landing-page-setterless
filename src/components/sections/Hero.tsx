@@ -126,7 +126,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Transformamos tu empresa con{' '}
+            Automatizamos tu empresa con{' '}
             <motion.span 
               className="text-primary-400 font-semibold"
               whileHover={{ textShadow: "0 0 20px rgba(0, 102, 255, 0.8)" }}
