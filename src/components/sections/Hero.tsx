@@ -107,12 +107,13 @@ const Hero = () => {
 
           {/* Main Headline */}
           <motion.h1 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 text-white font-display leading-tight mt-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 text-white font-display leading-normal mt-8"
+            style={{ lineHeight: '1.3' }}
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <span className="block">Automatizamos tu</span>
+            <span className="block">Transformamos tu</span>
             <span className="block bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 bg-clip-text text-transparent animate-text-glow">
               negocio con IA
             </span>
@@ -187,7 +188,7 @@ const Hero = () => {
 
           {/* Stats */}
           <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto"
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto px-4 pb-16"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1.2 }}
@@ -199,7 +200,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05, y: -5 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                <div className="text-center p-8 rounded-2xl bg-surface-secondary/50 backdrop-blur-sm border border-primary-500/20 hover:border-primary-500/40 transition-all duration-500 shadow-elevation-2 group-hover:shadow-glow">
+                <div className="text-center p-8 rounded-2xl bg-surface-secondary/50 backdrop-blur-sm border border-primary-500/20 hover:border-primary-500/40 transition-all duration-500 shadow-elevation-2 group-hover:shadow-glow min-h-[200px] flex flex-col justify-center">
                   
                   {/* Icon */}
                   <motion.div 
