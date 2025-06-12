@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Play, X, CheckCircle, ArrowRight } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { cn } from '@/lib/utils';
 
 const Proceso = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
