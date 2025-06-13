@@ -62,13 +62,23 @@ const Header = () => {
             onClick={() => smoothScrollTo('hero')}
           >
             {/* Custom Logo */}
-            <div className="relative">
+            <motion.div 
+              className="relative"
+              whileHover={{ 
+                rotate: 360,
+                scale: 1.1,
+              }}
+              transition={{ 
+                duration: 0.8, 
+                ease: "easeInOut" 
+              }}
+            >
               <img 
                 src="/logotrans.png"
                 alt="Setterless Logo"
-                className="w-12 h-12 object-contain"
+                className="w-12 h-12 object-contain transition-all duration-300 hover:drop-shadow-[0_0_20px_rgba(59,130,246,0.8)] hover:filter hover:brightness-110"
               />
-            </div>
+            </motion.div>
             
             <div>
               <motion.h1 
