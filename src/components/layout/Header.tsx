@@ -61,50 +61,14 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             onClick={() => smoothScrollTo('hero')}
           >
-            {/* Robot Icon */}
-            <motion.div 
-              className="relative"
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center shadow-glow group-hover:shadow-glow-lg transition-all duration-300 p-2">
-                {/* Robot SVG */}
-                <svg 
-                  className="w-8 h-8 text-white" 
-                  viewBox="0 0 200 200" 
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* Robot Head */}
-                  <path d="M50 50 L150 50 Q160 50 160 60 L160 100 Q160 110 150 110 L50 110 Q40 110 40 100 L40 60 Q40 50 50 50 Z" 
-                        stroke="currentColor" strokeWidth="3" fill="none"/>
-                  
-                  {/* Eyes */}
-                  <circle cx="70" cy="75" r="8" fill="currentColor"/>
-                  <circle cx="130" cy="75" r="8" fill="currentColor"/>
-                  
-                  {/* Mouth */}
-                  <rect x="85" y="90" width="30" height="4" rx="2" fill="currentColor"/>
-                  
-                  {/* Body */}
-                  <rect x="60" y="110" width="80" height="60" rx="10" stroke="currentColor" strokeWidth="3" fill="none"/>
-                  
-                  {/* Arms */}
-                  <rect x="35" y="125" width="25" height="8" rx="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <rect x="140" y="125" width="25" height="8" rx="4" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  
-                  {/* Legs */}
-                  <rect x="75" y="170" width="12" height="20" rx="6" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <rect x="113" y="170" width="12" height="20" rx="6" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  
-                  {/* Antenna */}
-                  <line x1="100" y1="50" x2="100" y2="35" stroke="currentColor" strokeWidth="2"/>
-                  <circle cx="100" cy="30" r="4" fill="currentColor"/>
-                </svg>
-              </div>
-              {/* Glow effect */}
-              <div className="absolute inset-0 bg-primary-500 rounded-xl blur-lg opacity-30 group-hover:opacity-50 transition-opacity duration-300" />
-            </motion.div>
+            {/* Custom Logo */}
+            <div className="relative">
+              <img 
+                src="/logotrans.png"
+                alt="Setterless Logo"
+                className="w-12 h-12 object-contain"
+              />
+            </div>
             
             <div>
               <motion.h1 

@@ -120,7 +120,7 @@ export default function Home() {
       <Proceso />
       
       {/* Beneficios Section - Placeholder */}
-      <section id="beneficios" className="py-24 bg-surface-secondary">
+      <section id="beneficios" className="py-24 bg-gradient-to-b from-surface-secondary via-surface-secondary to-surface-primary relative">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl font-bold text-white mb-8 font-display">
             Sección <span className="text-primary-500">Beneficios</span>
@@ -144,6 +144,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+        
+        {/* Smooth transition to Contacto section */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-black pointer-events-none" />
       </section>
       
       {/* Contacto Section */}
@@ -153,14 +156,21 @@ export default function Home() {
       <footer className="py-12 bg-surface-primary border-t border-primary-500/20">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-primary-500 mb-4 font-display">
-              SETTERLESS
-            </h3>
+            <div className="flex items-center justify-center mb-4">
+              <img 
+                src="/logotrans.png"
+                alt="Setterless Logo"
+                className="w-10 h-10 object-contain mr-3"
+              />
+              <h3 className="text-2xl font-bold text-white font-display">
+                SETTERLESS
+              </h3>
+            </div>
             <p className="text-gray-400 mb-6">
               Transformando negocios con automatización inteligente
             </p>
             <div className="flex justify-center space-x-6 text-gray-500">
-              <span>© 2024 SETTERLESS. Todos los derechos reservados.</span>
+              <span>© 2025 SETTERLESS. Todos los derechos reservados.</span>
             </div>
           </div>
         </div>

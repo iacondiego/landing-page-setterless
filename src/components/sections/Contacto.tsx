@@ -197,7 +197,7 @@ const Contacto = () => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen bg-gradient-to-b from-black via-surface-primary to-black py-24 overflow-hidden"
+      className="relative min-h-screen bg-gradient-to-b from-surface-primary via-surface-primary to-black py-24 overflow-hidden"
       id="contacto"
     >
       {/* Background Effects */}
