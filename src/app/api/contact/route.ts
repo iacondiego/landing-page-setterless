@@ -81,7 +81,7 @@ export async function POST(request: NextRequest) {
         try {
           const n8nResponse = JSON.parse(responseText);
           console.log('📊 API Contact: Respuesta parseada de n8n:', n8nResponse);
-        } catch (parseError) {
+        } catch {
           console.log('⚠️ API Contact: No se pudo parsear la respuesta como JSON');
         }
       }
