@@ -36,6 +36,24 @@ const Contacto = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Cargar script de Zentrol cuando se envía el formulario
+  React.useEffect(() => {
+    if (isSubmitted) {
+      const script = document.createElement('script');
+      script.src = 'https://api.zentrol.es/js/form_embed.js';
+      script.type = 'text/javascript';
+      script.async = true;
+      document.head.appendChild(script);
+
+      return () => {
+        // Cleanup: remover script cuando el componente se desmonte
+        if (document.head.contains(script)) {
+          document.head.removeChild(script);
+        }
+      };
+    }
+  }, [isSubmitted]);
+
   // Validación en tiempo real
   const validateField = (name: string, value: string): string | undefined => {
     switch (name) {
@@ -105,22 +123,53 @@ const Contacto = () => {
 
     setIsSubmitting(true);
 
-    // Simular envío de formulario
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
+    try {
+      // Enviar datos a través de nuestra API interna
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nombre: formData.nombre,
+          telefono: formData.telefono,
+          correo: formData.correo,
+          sitioWeb: formData.sitioWeb
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Formulario enviado exitosamente:', result);
+        setIsSubmitted(true);
+        
+        // Reset form después de completar la cita (más tiempo)
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({
+            nombre: '',
+            telefono: '',
+            correo: '',
+            sitioWeb: ''
+          });
+        }, 300000); // 5 minutos para que tenga tiempo de agendar
+      } else {
+        const errorData = await response.json().catch(() => ({ error: 'Error desconocido' }));
+        console.error('Error del servidor:', errorData);
+        throw new Error(errorData.error || `Error ${response.status}: ${response.statusText}`);
+      }
+    } catch (error) {
+      console.error('Error completo al enviar el formulario:', error);
       
-      // Reset form después de 3 segundos
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          nombre: '',
-          telefono: '',
-          correo: '',
-          sitioWeb: ''
-        });
-      }, 3000);
-    }, 2000);
+      // Mensaje de error más específico
+      const errorMessage = error instanceof Error 
+        ? `Error: ${error.message}`
+        : 'Error desconocido al enviar el formulario';
+      
+      alert(`Hubo un problema: ${errorMessage}\n\nPor favor, abre la consola del navegador (F12) para ver más detalles.`);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const containerVariants = {
@@ -356,27 +405,47 @@ const Contacto = () => {
                   <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-center py-12"
+                    className="py-8"
                   >
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                       transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                      className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6"
+                      className="text-center mb-6"
                     >
-                      <CheckCircle className="w-10 h-10 text-green-400" />
+                      <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <CheckCircle className="w-8 h-8 text-green-400" />
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white mb-2">
+                        ¡Datos Enviados Exitosamente!
+                      </h3>
+                      <p className="text-gray-300 text-sm mb-4">
+                        Ahora agenda tu consulta gratuita de 30 minutos
+                      </p>
                     </motion.div>
-                    
-                    <h3 className="text-2xl font-bold text-white mb-3">
-                      ¡Mensaje Enviado!
-                    </h3>
-                    <p className="text-gray-300 mb-4">
-                      Nos pondremos en contacto contigo en menos de 1 hora para comenzar 
-                      tu transformación digital.
-                    </p>
-                    <p className="text-sm text-primary-400 font-semibold">
-                      🚀 ¡Prepárate para acelerar tu negocio!
-                    </p>
+
+                    {/* Widget de Zentrol */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="w-full"
+                    >
+                      <iframe 
+                        src="https://api.zentrol.es/widget/booking/M6ONmdUpecs7PNCx7jYe" 
+                        style={{
+                          width: '100%',
+                          border: 'none',
+                          overflow: 'hidden',
+                          minHeight: '600px',
+                          borderRadius: '12px'
+                        }}
+                        scrolling="no" 
+                        id="M6ONmdUpecs7PNCx7jYe_1749818464874"
+                        title="Agendar Cita"
+                      />
+                    </motion.div>
                   </motion.div>
                 )}
               </div>
