@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import ElevenLabsWidget from "@/components/ui/ElevenLabsWidget";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -145,6 +146,9 @@ export default function RootLayout({
         <main id="main-content" className="relative">
           {children}
         </main>
+
+        {/* ElevenLabs Widget - Always visible */}
+        <ElevenLabsWidget />
 
         {/* Global scripts */}
         <script
