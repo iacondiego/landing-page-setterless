@@ -4,6 +4,7 @@ import React from 'react';
 
 // Declaración de TypeScript para el elemento personalizado
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
       'elevenlabs-convai': {
