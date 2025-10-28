@@ -3,22 +3,26 @@
 import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { User, Phone, Mail, Globe, Send, CheckCircle, Sparkles } from 'lucide-react';
+import { User, Phone, Mail, Building2, Send, CheckCircle, Sparkles, FileText } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
 interface FormData {
   nombre: string;
+  empresa: string;
+  email: string;
   telefono: string;
-  correo: string;
-  sitioWeb: string;
+  servicio: string;
+  descripcion: string;
 }
 
 interface FormErrors {
   nombre?: string;
+  empresa?: string;
+  email?: string;
   telefono?: string;
-  correo?: string;
-  sitioWeb?: string;
+  servicio?: string;
+  descripcion?: string;
 }
 
 const Contacto = () => {
@@ -27,9 +31,11 @@ const Contacto = () => {
 
   const [formData, setFormData] = useState<FormData>({
     nombre: '',
+    empresa: '',
+    email: '',
     telefono: '',
-    correo: '',
-    sitioWeb: ''
+    servicio: '',
+    descripcion: ''
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
@@ -62,33 +68,37 @@ const Contacto = () => {
         if (value.trim().length < 2) return 'El nombre debe tener al menos 2 caracteres';
         return undefined;
       
-      case 'telefono':
-        if (!value.trim()) return 'El teléfono es requerido';
-        const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-        if (!phoneRegex.test(value.replace(/\s/g, ''))) return 'Formato de teléfono inválido';
+      case 'empresa':
+        if (!value.trim()) return 'El nombre de la empresa es requerido';
         return undefined;
       
-      case 'correo':
-        if (!value.trim()) return 'El correo es requerido';
+      case 'email':
+        if (!value.trim()) return 'El email es requerido';
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) return 'Formato de correo inválido';
+        if (!emailRegex.test(value)) return 'Formato de email inválido';
         return undefined;
       
-      case 'sitioWeb':
-        if (!value.trim()) return 'El sitio web es requerido';
-        try {
-          new URL(value.startsWith('http') ? value : `https://${value}`);
-          return undefined;
-        } catch {
-          return 'URL inválida (ej: empresa.com o https://empresa.com)';
-        }
+      case 'telefono':
+        if (!value.trim()) return undefined; // Teléfono es opcional
+        const phoneRegex = /^[\+]?[0-9\s\-()]{7,20}$/;
+        if (!phoneRegex.test(value)) return 'Formato de teléfono inválido';
+        return undefined;
+      
+      case 'servicio':
+        if (!value.trim()) return 'Debes seleccionar un servicio';
+        return undefined;
+      
+      case 'descripcion':
+        if (!value.trim()) return 'La descripción es requerida';
+        if (value.trim().length < 10) return 'La descripción debe tener al menos 10 caracteres';
+        return undefined;
       
       default:
         return undefined;
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     
     setFormData(prev => ({
@@ -132,9 +142,11 @@ const Contacto = () => {
         },
         body: JSON.stringify({
           nombre: formData.nombre,
+          empresa: formData.empresa,
+          email: formData.email,
           telefono: formData.telefono,
-          correo: formData.correo,
-          sitioWeb: formData.sitioWeb
+          servicio: formData.servicio,
+          descripcion: formData.descripcion
         })
       });
 
@@ -148,9 +160,11 @@ const Contacto = () => {
           setIsSubmitted(false);
           setFormData({
             nombre: '',
+            empresa: '',
+            email: '',
             telefono: '',
-            correo: '',
-            sitioWeb: ''
+            servicio: '',
+            descripcion: ''
           });
         }, 300000); // 5 minutos para que tenga tiempo de agendar
       } else {
@@ -296,22 +310,6 @@ const Contacto = () => {
                 </motion.div>
               ))}
             </motion.div>
-
-            {/* Contact Info */}
-            <motion.div variants={itemVariants} className="space-y-3 pt-8 border-t border-surface-tertiary">
-              <p className="text-sm text-gray-400 uppercase tracking-wider font-semibold">
-                ¿Prefieres llamar?
-              </p>
-              <a
-                href="tel:+1234567890"
-                className="text-2xl font-bold text-primary-400 hover:text-primary-300 transition-colors"
-              >
-                +1 (555) 123-4567
-              </a>
-              <p className="text-sm text-gray-500">
-                Disponible 24/7 • Respuesta garantizada en menos de 1 hora
-              </p>
-            </motion.div>
           </motion.div>
 
           {/* Right Side - Form */}
@@ -333,10 +331,11 @@ const Contacto = () => {
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-5">
                       <Input
                         name="nombre"
-                        label="Nombre completo"
+                        label="Nombre"
+                        placeholder="Tu nombre"
                         value={formData.nombre}
                         onChange={handleInputChange}
                         error={errors.nombre}
@@ -345,37 +344,86 @@ const Contacto = () => {
                       />
 
                       <Input
-                        name="telefono"
-                        label="Teléfono / WhatsApp"
-                        type="tel"
-                        value={formData.telefono}
+                        name="empresa"
+                        label="Empresa"
+                        placeholder="Nombre de empresa o proyecto"
+                        value={formData.empresa}
                         onChange={handleInputChange}
-                        error={errors.telefono}
-                        icon={<Phone className="w-5 h-5" />}
+                        error={errors.empresa}
+                        icon={<Building2 className="w-5 h-5" />}
                         required
                       />
 
                       <Input
-                        name="correo"
-                        label="Correo electrónico"
+                        name="email"
+                        label="Email"
                         type="email"
-                        value={formData.correo}
+                        placeholder="Tu correo electrónico de contacto"
+                        value={formData.email}
                         onChange={handleInputChange}
-                        error={errors.correo}
+                        error={errors.email}
                         icon={<Mail className="w-5 h-5" />}
                         required
                       />
 
                       <Input
-                        name="sitioWeb"
-                        label="Sitio web de tu empresa"
-                        value={formData.sitioWeb}
+                        name="telefono"
+                        label="Teléfono"
+                        type="tel"
+                        placeholder="Déjanos tu teléfono para una respuesta más rápida"
+                        value={formData.telefono}
                         onChange={handleInputChange}
-                        error={errors.sitioWeb}
-                        icon={<Globe className="w-5 h-5" />}
-                        placeholder="empresa.com"
-                        required
+                        error={errors.telefono}
+                        icon={<Phone className="w-5 h-5" />}
                       />
+
+                      {/* Select de Servicio */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Servicio (selecciona el que mejor se adapte a tu caso) <span className="text-red-400">*</span>
+                        </label>
+                        <select
+                          name="servicio"
+                          value={formData.servicio}
+                          onChange={handleInputChange}
+                          className={`w-full px-4 py-3 bg-surface-primary border ${
+                            errors.servicio ? 'border-red-500' : 'border-surface-tertiary'
+                          } rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all duration-300`}
+                          required
+                        >
+                          <option value="">Elige el servicio que mejor se adapte a tus necesidades</option>
+                          <option value="consultoria">Consultoría Estratégica en Automatización con IA</option>
+                          <option value="agentes-atencion">Agentes IA para Atención al Cliente y Ventas</option>
+                          <option value="agentes-voz">Agentes de Voz Inteligentes</option>
+                          <option value="procesos">Automatización de Procesos Empresariales</option>
+                          <option value="contenido">Automatización de Contenido</option>
+                          <option value="rag">Agentes RAG y Bases de Conocimiento</option>
+                        </select>
+                        {errors.servicio && (
+                          <p className="text-sm text-red-400 mt-1">{errors.servicio}</p>
+                        )}
+                      </div>
+
+                      {/* Textarea de Descripción */}
+                      <div className="space-y-2">
+                        <label className="block text-sm font-medium text-gray-300">
+                          Descripción de lo que necesitas <span className="text-red-400">*</span>
+                        </label>
+                        <textarea
+                          name="descripcion"
+                          value={formData.descripcion}
+                          onChange={handleInputChange}
+                          placeholder="Describe con detalle lo que necesitas. Cuanto más específiques, mejor te podremos ayudar."
+                          rows={5}
+                          className={`w-full px-4 py-3 bg-surface-primary border ${
+                            errors.descripcion ? 'border-red-500' : 'border-surface-tertiary'
+                          } rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 transition-all duration-300 resize-none`}
+                          required
+                        />
+                        {errors.descripcion && (
+                          <p className="text-sm text-red-400 mt-1">{errors.descripcion}</p>
+                        )}
+                      </div>
 
                       <Button
                         type="submit"
@@ -389,7 +437,7 @@ const Contacto = () => {
                         ) : (
                           <>
                             <Send className="w-5 h-5 mr-2" />
-                            Acelerar mi Negocio Ahora
+                            ENVIAR SOLICITUD
                           </>
                         )}
                       </Button>

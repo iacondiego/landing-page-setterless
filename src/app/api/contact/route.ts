@@ -8,12 +8,12 @@ export async function POST(request: NextRequest) {
     console.log('📧 API Contact: Datos recibidos:', body);
     
     // Validar que los campos requeridos estén presentes
-    const { nombre, telefono, correo, sitioWeb } = body;
+    const { nombre, empresa, email, telefono, servicio, descripcion } = body;
     
-    if (!nombre || !telefono || !correo || !sitioWeb) {
+    if (!nombre || !empresa || !email || !servicio || !descripcion) {
       console.log('❌ API Contact: Faltan campos requeridos');
       return NextResponse.json(
-        { error: 'Todos los campos son requeridos' },
+        { error: 'Todos los campos son requeridos (excepto teléfono)' },
         { status: 400 }
       );
     }
@@ -22,9 +22,11 @@ export async function POST(request: NextRequest) {
     
     const dataToSend = {
       nombre,
-      telefono,
-      correo,
-      sitioWeb,
+      empresa,
+      email,
+      telefono: telefono || 'No proporcionado',
+      servicio,
+      descripcion,
       timestamp: new Date().toISOString(),
       source: 'landing-page-form',
       userAgent: request.headers.get('user-agent'),

@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import Header from '@/components/layout/Header';
 import Hero from '@/components/sections/Hero';
+import Servicios from '@/components/sections/Servicios';
 import Proceso from '@/components/sections/Proceso';
 import Contacto from '@/components/sections/Contacto';
 
@@ -116,38 +117,11 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
       
+      {/* Servicios Section */}
+      <Servicios />
+      
       {/* Process Section */}
       <Proceso />
-      
-      {/* Beneficios Section - Placeholder */}
-      <section id="beneficios" className="py-24 bg-gradient-to-b from-surface-secondary via-surface-secondary to-surface-primary relative">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-5xl font-bold text-white mb-8 font-display">
-            Sección <span className="text-primary-500">Beneficios</span>
-          </h2>
-          <p className="text-xl text-gray-300 mb-8">
-            🚧 En construcción - Aquí irán los increíbles beneficios de automatizar con IA
-          </p>
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              "Lead Gen Agents",
-              "Customer Support 24/7", 
-              "N8N Automations"
-            ].map((service, index) => (
-              <div key={index} className="p-8 bg-surface-primary/50 rounded-xl border border-primary-500/20">
-                <h3 className="text-2xl font-semibold text-primary-400 mb-4">{service}</h3>
-                <p className="text-gray-300">
-                  Próximamente: Detalles épicos sobre cómo {service.toLowerCase()} 
-                  transformará tu negocio completamente.
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        {/* Smooth transition to Contacto section */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-b from-transparent to-black pointer-events-none" />
-      </section>
       
       {/* Contacto Section */}
       <Contacto />
