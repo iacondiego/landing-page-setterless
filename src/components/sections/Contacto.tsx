@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { User, Phone, Mail, Building2, Send, CheckCircle, Sparkles, FileText } from 'lucide-react';
+import { User, Phone, Mail, Building2, Send, CheckCircle, Sparkles } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 
