@@ -32,6 +32,10 @@ export const metadata: Metadata = {
   authors: [{ name: "SETTERLESS Team" }],
   creator: "SETTERLESS",
   publisher: "SETTERLESS",
+  icons: {
+    icon: '/logotrans.png',
+    apple: '/apple-touch-icon.png',
+  },
   robots: {
     index: true,
     follow: true,
@@ -93,12 +97,6 @@ export default function RootLayout({
         {/* Preload critical resources */}
         <link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="preload" href="/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        
-        {/* Favicon and app icons */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/manifest.json" />
         
         {/* Performance hints */}
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
