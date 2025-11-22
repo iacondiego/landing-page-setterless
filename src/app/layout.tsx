@@ -121,6 +121,10 @@ export default function RootLayout({
         <meta name="theme-color" content="#0066FF" media="(prefers-color-scheme: light)" />
         <meta name="msapplication-TileColor" content="#0066FF" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
+        
+        {/* Google AdSense */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7626962516221761"
+          crossOrigin="anonymous"></script>
       </head>
       <body className={`${inter.className} bg-surface-primary text-white antialiased`}>
         {/* Loading animation */}
